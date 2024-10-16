@@ -1,0 +1,293 @@
+    ECART APPLICATION USING REDUX & TAIWIND CSS IN REACT
+    ====================================================
+
+# no of pages in ecart application/website (components)
+
+home                      
+wishlist
+cart
+seperate page for showing each single product  (view)          
+
+: these 4 pages needed   & 
+additional components-> 
+
+header
+footer
+we are creating other components accordingly
+
+-------------------------------------------------------------------------------------
+
+# create folder for pages  : named 'pages' in src
+
+create  =>  Home, Wishlist, Cart, View  -> JSX files in src    &   rafce applied-(to build structure)
+
+# create components folder for using external components to build that pages
+
+create  => Header, Footer  -> JSX files in src    &   rafce applied-(to build structure)
+
+-------------------------------------------------------------------------------------------
+
+# to view this pages in browser  -> install react-router-dom in cmd   -> npm i react-router-dom
+
+(bcz : installing library for setting path)
+
+---------------------------------------------------------------------------------------------
+
+S1: 
+
+ main.jsx  => 
+ ********  
+
+ import { BrowserRouter } from 'react-router-dom'
+ <BrowserRouter><App /></BrowserRouter>
+
+App component BrowserRouter nte child akkanam  - path proper ayitt work cheyyan
+BrowserRouter ne import cheyyanam
+(bcz: BrowserRouter component nu akathulla features app component nu kittan)
+
+to set path : app.jsx
+              *******
+
+inside of this -> <> </>
+
+1. <Routes><Route></Routes>
+2. import Routes & Route. import { Route, Routes } from 'react-router-dom'
+3. import all pages like : import Home from './pages/Home'
+4. provide path to all pages & render by element
+        like: <Route path='/' element={<Home/>}/>
+              <Route path='/Wishlist' element={<Wishlist/>}/>
+              <Route path='/Cart' element={<Cart/>}/>
+           
+        in case of view : we can show each product in a page
+        so, url shows which product detail is displaying.its provided by parameter of url
+
+        how to give path parameter to url  -> it give an id
+        <Route path='/:id/View' element={<View/>}/>
+        ( /=path parameter )
+5. ' page not found ' component
+     
+     create file in pages in src  ->  Pnf.jsx ,  rafce.
+     create path : <Route path='/*' element={<Pnf/>}/>
+    
+6. provide Footer in under of Routes & import footer
+       like :  </Routes>
+               <Footer />     
+import Footer from './components/Footer'
+
+[routes nte adiyil (ellathinte avasanam)]
+
+7.  Header common ayitt Routes nte mukalil kodukkunnilla. 
+
+bcz: -> home page le oru element header il varanam . but vere oru page lum varanda. like: home page il search option venam.but wishlist,cart,view il search option venda
+
+ie, header nakathulla pala components, oro page num anusarich change cheyyanam.so header component should know which page they are displaying.
+
+so, <Header/> not provided in app component(App.jsx)
+
+
+DESIGNING  -Tailwind css using
+==========
+
+https://tailwindcss.com/docs/guides/vite  => (this page)
+
+1. install tailwind css in terminal
+
+install => framework guides -> vite click it
+
+--------------------------------------------------
+npm install -D tailwindcss postcss autoprefixer   |
+npx tailwindcss init -p                           |
+---------------------------------------------------
+
+Install tailwindcss and its peer dependencies, then generate your 'tailwind.config.js' and 'postcss.config.js' files.
+
+2. in tailwind.config.js ->
+      ******************
+ippo ulla code delete it & copy paste code this code
+
+Configure your template paths : Add the paths to all of your template files in your tailwind.config.js file.
+-----------------------------------------------------
+/** @type {import('tailwindcss').Config} */         
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+-----------------------------------------------------
+this is the code.
+
+3. Add the Tailwind directives to your CSS  (index.css)
+                                             *********
+Add the @tailwind directives for each of Tailwind’s layers to your ./src/index.css file.
+-------------------------
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+--------------------------
+
+if tailwind css working => must do 'npm run dev' in terminal                            ***********
+
+Designing pages
+===============
+
+Home.jsx
+********
+
+1. <Header/> inside of <></> & import Header 
+   (import Header from '../components/Header')
+   bcz: home page il header kanaan pattum
+
+Header.jsx
+**********
+icon,website name,search button,wishlist,cart -> needed 
+nav tag used instead of div tag
+
+inside of nav tag  =>
+
+1. redirect to home page while clicking on website name - provided Link on website name 
+   using Link tag  & import it.
+   then, set path in ' to={} '
+   <Link to={'/'}></Link>    '/' -> path to home page 
+
+   named website  :   <Link to={'/'}>E Cart</Link>
+
+2. for icon, use fontawesome. & paste it in index.html
+                                            **********
+ font awesome cdn link  ->
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+fontawesome.com  ->
+truck-fast icon link   ->   <i className="fa-solid fa-truck-fast"></i>
+
+3. 3 list items we needed  -> search button,wishlist,cart
+  
+  3.1 use ul tag for creating list items
+  3.2 li*3 applied (bcz 3 list item)
+      
+  in 1st li tag -> search button
+  1. create an input tag -> <input type="text" /></li>
+  2. 'which content is typed here' tell this in a placeholder             (placeholder='Search Products here!')
+
+  in 2nd li tag -> wishlist (inside of link tag)
+  1. create link tag
+  2. set path  to={}   -> to={'/wishlist'} 
+  3. set icon for wishlist -> <i className='fa-solid fa-heart'></i>
+  4. to see count in wishlist (ie, no of products in wishlist)
+     4.1 create span tag & write just a no inside that -><span>10</span>
+ 
+  in 3rd li tag -> cart (inside of link tag)
+    same like wishlist & named Cart instead of wishlist
+
+
+styling header
+==============
+
+in classname in nav,
+
+use flex -> to arrange same row in header
+
+
+provide classname & style to header
+
+================================================
+
+back to Home.jsx 
+        ********
+designing
+---------
+
+home & footer header nte adiyil aayi so, style={{marginTop:'80px'}}
+
+design grid
+
+    <> 
+      <Header />
+      <div style={{marginTop:'80px'}} className='container mx-auto px-4'>
+        <div className="grid grid-cols-4 gap-4">
+          <div className="rounded border p-2 shadow">
+            <img  style={{width:'100%'}} src="https://th.bing.com/th/id/OIP.6pRyUQU8OjkHAmOXkdYhLQHaFo?rs=1&pid=ImgDetMain" alt="" />
+            <div className="text-center">
+              <div className="text-xl font-bold">title</div>
+              <Link className='bg-blue-500 text-white p-1 inline-block rounded' to={'/id/view'}>View More</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+
+design wishlist
+       ********
+
+       same code of home.jsx & some changes
+       1. provide a h1 heading as 'your wishlist' before className named grid 
+       2. including h1 heading, that provided inside of <></> (bcz: wishlist empty anenki onnm kanathirikkan vendi)
+
+       <>
+        <Header />
+        <div style={{marginTop:'80px'}} className='container mx-auto px-4'>
+        <>
+          <h1 className='text-red-500 text-3x1 font-bold mb-5'>Your Wishlist</h1>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="rounded border p-2 shadow">
+              <img  style={{width:'100%'}} src="https://th.bing.com/th/id/OIP.6pRyUQU8OjkHAmOXkdYhLQHaFo?rs=1&pid=ImgDetMain" alt="" />
+              <div className="text-center">
+                <div className="text-xl font-bold">title</div>
+                <Link className='bg-blue-500 text-white p-1 inline-block rounded' to={'/id/view'}>View More</Link>
+              </div>
+            </div>
+          </div>
+        </>
+      </div>
+    </>
+
+
+design cart, view
+
+design completed
+
+
+Logic Implementation
+====================
+
+1. install REDUX - npm install @reduxjs/toolkit react-redux
+ (toolkit) (in cmd)
+
+2. create folder 'redux' in src
+   create cartStore.js in redux folder
+   write codes for cartStore.js
+
+  [ import {configureStore} from '@reduxjs/toolkit'
+    const cartStore = configureStore({
+    reducer : {}
+    })
+    export default cartStore  ]
+
+3.  main.jsx =>  
+    
+  [ import {Provider} from 'react-redux'
+    import cartStore from './redux/cartStore.js'  
+      <Provider store={cartStore}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>   ]
+
+==============================================================================
+
+createAsyncThunk(actiontype,function can return promise) : to make asynchronous function call in an action, normal reducer cannot resolve promise,inorder to resolve promise we have to use extraReducers in slice. extraReducers object which can define
+
+useParams() : hook used to get path parameter from a path 
+
+
+===============================================================
+
+oru product delete cheyyuka ennu paranjaal => think about output
+
+ie, output is => delete cheyyenda item ozhich balance items
+so, products filter cheythedukkuka (dont delete option)
